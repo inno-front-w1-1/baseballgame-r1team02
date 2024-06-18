@@ -8,11 +8,11 @@
   <body>
     <div>
       <label>정답을 적어주세용</label>
-      <input maxlength="3" type="text" id="answer" />
+      <input type="text" maxlength="3" id="answer" />
       <button id="Bu">정답제출</button>
     </div>
     <button id="reset">새게임</button>
- 
+
     <ul id="score">
       <li>점수판!</li>
     </ul>
@@ -38,29 +38,43 @@
     function submit_A(in_val) {
       let submit_A = [...new Set(in_val)].length == 3;
       console.log(submit_A);
+      if(!submit_A){
+        alert("중복된숫자가 있거나 숫자갯수가 부족합니다")
+      }
       return submit_A;
     }
     let answer = ranMath();
     let bu = document.getElementById("Bu");
-    let reset=document.getElementById("reset");
-    let log=document.getElementById("score");
+    let reset = document.getElementById("reset");
+    let log = document.getElementById("score");
     function Correct() {
-      const in_value = document.getElementById("answer").value.split("");
-      if (submit_A(in_value)) {
+      const in_value = String(document.getElementById("answer").value).split(
+        ""
+      );
+      if (submit_A(in_value)&&valid()) {
         console.log(answer, in_value);
         // 여기에 answer가 정답 in_value가 받아오는값 서로비교해서 ul에다
         //li로 로그 추가해주는 일! 부탁드립니다 정답이면 alert로 ! 정답 !! 짝짝하고~
-      } else {
-        alert("중복되는숫자 혹은 숫자의 갯수가 부족합니다");
-      }
+        //제출버튼 비활성화!
+      } 
     }
     function newGame() {
       answer = ranMath();
-      log.innerHTML="<li>점수판!</li>"
-      document.getElementById("answer").value=""
-
+      log.innerHTML = "<li>점수판!</li>";
+      document.getElementById("answer").value = "";
     }
-    reset.addEventListener("click", () => newGame())
+    function valid() {
+      var input = document.getElementById("answer").value;
+      var vare = /^[0-9]+$/;
+      if (vare.test(input)) {
+        console.log("통과")
+          return true
+      } else {
+        alert("숫자 이외의 문자가 들어갔습니다")
+        return false
+      }
+    }
+    reset.addEventListener("click", () => newGame());
     bu.addEventListener("click", () => Correct());
   </script>
 </html>

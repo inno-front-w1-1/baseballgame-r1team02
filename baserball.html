@@ -22,7 +22,7 @@
       let a = String(Math.random() * 1e16);
       let rnum = new Set();
       for (const z of a.split("")) {
-        if (rnum.has(z)) {
+        if (rnum.has(z) || z == "0") {
           continue;
         } else {
           rnum.add(z);

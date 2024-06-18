@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <label>정답을 적어주세용</label>
+      <input maxlength="3" type="text" id="answer" />
+      <button id="Bu">정답제출</button>
+    </div>
+    <button id="reset">새게임</button>
+ 
+    <ul id="score">
+      <li>점수판!</li>
+    </ul>
+  </body>
+  <script>
+    function ranMath() {
+      let a = String(Math.random() * 1e16);
+      let rnum = new Set();
+      for (const z of a.split("")) {
+        if (rnum.has(z) || z == "0") {
+          continue;
+        } else {
+          rnum.add(z);
+        }
+        if ([...rnum].length == 3) {
+          return [...rnum];
+        }
+      }
+      console.log("3개 안됨");
+      ranMath();
+    }
+
+    function submit_A(in_val) {
+      let submit_A = [...new Set(in_val)].length == 3;
+      console.log(submit_A);
+      return submit_A;
+    }
+    let answer = ranMath();
+    let bu = document.getElementById("Bu");
+    let reset=document.getElementById("reset");
+    let log=document.getElementById("score");
+    function Correct() {
+      const in_value = document.getElementById("answer").value.split("");
+      if (submit_A(in_value)) {
+        console.log(answer, in_value);
+        // 여기에 answer가 정답 in_value가 받아오는값 서로비교해서 ul에다
+        //li로 로그 추가해주는 일! 부탁드립니다 정답이면 alert로 ! 정답 !! 짝짝하고~
+      } else {
+        alert("중복되는숫자 혹은 숫자의 갯수가 부족합니다");
+      }
+    }
+    function newGame() {
+      answer = ranMath();
+      log.innerHTML="<li>점수판!</li>"
+      document.getElementById("answer").value=""
+
+    }
+    reset.addEventListener("click", () => newGame())
+    bu.addEventListener("click", () => Correct());
+  </script>
+</html>

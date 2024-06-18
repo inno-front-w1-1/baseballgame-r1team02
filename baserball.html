@@ -44,7 +44,7 @@
       let submit_A = [...new Set(in_val)].length == 3;
       console.log(submit_A);
       if(!submit_A){
-        alert("중복된숫자가 있거나 숫자갯수가 부족합니다")
+        alert("중복된 숫자가 있거나 숫자갯수가 부족합니다")
       }
       return submit_A;
     }
@@ -62,7 +62,8 @@
 
           console.log(answer, in_value);
 
-// ----------------------- 추가한 부분 ------------------------          
+// ----------------------- 추가한 부분 ------------------------       
+
         let strikes = 0;
         let balls = 0;
         for (let i = 0; i < 3; i++) {
@@ -78,9 +79,7 @@
         } else {
           log.innerHTML += `<li>입력값: ${in_value.join("")} (스트라이크: ${strikes}, 볼: ${balls})</li>`;
         }
-        } else {
-          alert("중복되는 숫자가 있거나 숫자의 갯수가 부족합니다");
-        }
+        } 
 
     // ---------------------------------------------------------  
     }
@@ -91,17 +90,7 @@
       log.innerHTML = "<li>점수판!</li>";
       document.getElementById("answer").value = "";
     }
-    function valid() {
-      var input = document.getElementById("answer").value;
-      var vare = /^[0-9]+$/;
-      if (vare.test(input)) {
-        console.log("통과")
-          return true
-      } else {
-        alert("숫자 이외의 문자가 들어갔습니다")
-        return false
-      }
-    }
+
     reset.addEventListener("click", () => newGame());
     bu.addEventListener("click", () => Correct());
 

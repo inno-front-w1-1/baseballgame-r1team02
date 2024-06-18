@@ -9,12 +9,12 @@
 
     <div>
       <label>정답을 적어주세용</label>
-      <input maxlength="3" type="text" id="answer" />
+      <input type="text" maxlength="3" id="answer" />
       <button id="Bu">정답제출</button>
     </div>
 
     <button id="reset">새게임</button>
- 
+
     <ul id="score">
       <li>점수판!</li>
     </ul>
@@ -26,7 +26,7 @@
 
       let rnum = new Set();
       for (const z of a.split("")) {
-        if (rnum.has(z) || z == "0") {
+        if (rnum.has(z)) {
           continue;
         } else {
           rnum.add(z);
@@ -43,6 +43,9 @@
     function submit_A(in_val) {
       let submit_A = [...new Set(in_val)].length == 3;
       console.log(submit_A);
+      if(!submit_A){
+        alert("중복된숫자가 있거나 숫자갯수가 부족합니다")
+      }
       return submit_A;
     }
 
@@ -85,11 +88,21 @@
 
     function newGame() {
       answer = ranMath();
-      log.innerHTML="<li>점수판!</li>"
-      document.getElementById("answer").value=""
-
+      log.innerHTML = "<li>점수판!</li>";
+      document.getElementById("answer").value = "";
     }
-    reset.addEventListener("click", () => newGame())
+    function valid() {
+      var input = document.getElementById("answer").value;
+      var vare = /^[0-9]+$/;
+      if (vare.test(input)) {
+        console.log("통과")
+          return true
+      } else {
+        alert("숫자 이외의 문자가 들어갔습니다")
+        return false
+      }
+    }
+    reset.addEventListener("click", () => newGame());
     bu.addEventListener("click", () => Correct());
 
   </script>

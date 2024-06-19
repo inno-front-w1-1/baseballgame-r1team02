@@ -11,6 +11,7 @@
       <input type="text" maxlength="3" id="answer" />
       <button id="Bu">정답제출</button>
     </div>
+
     <button id="reset">새게임</button>
 
     <ul id="score">
@@ -20,6 +21,7 @@
   <script>
     function ranMath() {
       let a = String(Math.random() * 1e16);
+
       let rnum = new Set();
       for (const z of a.split("")) {
         if (rnum.has(z) || z == "0") {
@@ -38,43 +40,64 @@
     function submit_A(in_val) {
       let submit_A = [...new Set(in_val)].length == 3;
       console.log(submit_A);
-      if(!submit_A){
-        alert("중복된숫자가 있거나 숫자갯수가 부족합니다")
+      if (!submit_A) {
+        alert("중복된 숫자가 있거나 숫자갯수가 부족합니다");
       }
       return submit_A;
     }
+
     let answer = ranMath();
-    let bu = document.getElementById("Bu");
+    let submit_button = document.getElementById("Bu");
     let reset = document.getElementById("reset");
     let log = document.getElementById("score");
+
     function Correct() {
-      const in_value = String(document.getElementById("answer").value).split(
-        ""
-      );
-      if (submit_A(in_value)&&valid()) {
-        console.log(answer, in_value);
-        // 여기에 answer가 정답 in_value가 받아오는값 서로비교해서 ul에다
-        //li로 로그 추가해주는 일! 부탁드립니다 정답이면 alert로 ! 정답 !! 짝짝하고~
-        //제출버튼 비활성화!
-      } 
+      const in_value = document.getElementById("answer").value;
+
+      if (submit_A(in_value.split("")) && valid(in_value)) {
+
+
+        // ----------------------- 추가한 부분 ------------------------
+
+        let strikes = 0;
+        let balls = 0;
+        for (let i = 0; i < 3; i++) {
+          if (answer[i] === in_value[i]) {
+            strikes++;
+          } else if (answer.includes(in_value[i])) {
+            balls++;
+          }
+        }
+        if (strikes === 3) {
+          alert("정답!! 👏👏👏");
+          log.innerHTML += `<li>정답: ${in_value}</li>`;
+          submit_button.disabled = true;
+        } else {
+          log.innerHTML += `<li>입력값: ${in_value} (스트라이크: ${strikes}, 볼: ${balls})</li>`;
+        }
+      }
+
+      // ---------------------------------------------------------
     }
+
     function newGame() {
       answer = ranMath();
       log.innerHTML = "<li>점수판!</li>";
       document.getElementById("answer").value = "";
     }
-    function valid() {
-      var input = document.getElementById("answer").value;
-      var vare = /^[0-9]+$/;
+
+    function valid(input) {
+      let vare = /^[0-9]+$/;
       if (vare.test(input)) {
-        console.log("통과")
-          return true
+        console.log("통과");
+        return true;
       } else {
-        alert("숫자 이외의 문자가 들어갔습니다")
-        return false
+        alert("숫자 이외의 문자가 들어갔습니다");
+        return false;
       }
     }
+
     reset.addEventListener("click", () => newGame());
-    bu.addEventListener("click", () => Correct());
+    submit_button.addEventListener("click", () => Correct());
   </script>
 </html>

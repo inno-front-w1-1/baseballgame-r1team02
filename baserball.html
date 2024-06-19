@@ -24,7 +24,7 @@
 
       let rnum = new Set();
       for (const z of a.split("")) {
-        if (rnum.has(z)) {
+        if (rnum.has(z) || z == "0") {
           continue;
         } else {
           rnum.add(z);
@@ -53,7 +53,7 @@
 
     function Correct() {
       const in_value = document.getElementById("answer").value;
-
+      document.getElementById("answer").value=""
       if (submit_A(in_value.split("")) && valid(in_value)) {
 
 
@@ -84,6 +84,7 @@
       answer = ranMath();
       log.innerHTML = "<li>점수판!</li>";
       document.getElementById("answer").value = "";
+      submit_button.disabled = false;
     }
 
     function valid(input) {
